@@ -24,7 +24,7 @@ public class EmployeePayrollController {
 	@RequestMapping(value = { "/getAll" })
 	public ResponseEntity<ResponseDTO> getEmployeePayrollData() {
 		EmployeePayrollData employeePayrollData = null;
-		employeePayrollData = new EmployeePayrollData(1, new EmployeePayrollDTO("Suraj", 25000));
+		employeePayrollData = new EmployeePayrollData(1, new EmployeePayrollDTO("Yogendra", 55000));
 		ResponseDTO respDTO = new ResponseDTO("Get call Successful:", employeePayrollData);
 		return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
 	}
@@ -37,7 +37,7 @@ public class EmployeePayrollController {
 	@GetMapping("/get/{empId}")
 	public ResponseEntity<ResponseDTO> getEmployeePayrollData(@PathVariable("empId") int empId) {
 		EmployeePayrollData employeePayrollData = null;
-		employeePayrollData = new EmployeePayrollData(empId, new EmployeePayrollDTO("Kishor", 28000));
+		employeePayrollData = new EmployeePayrollData(empId, new EmployeePayrollDTO("Kritika", 58000));
 		ResponseDTO respDTO = new ResponseDTO("Get call for ID Successful:", employeePayrollData);
 		return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
 	}
