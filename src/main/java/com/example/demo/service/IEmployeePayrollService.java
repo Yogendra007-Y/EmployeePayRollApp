@@ -12,7 +12,7 @@ public interface IEmployeePayrollService {
 	/**
 	 * Method: get employee details
 	 */
-	public List<EmployeePayrollData>  getEmployeePayrollDataById1;
+	public List<EmployeePayrollData> getEmployeePayrollData();
 
 	/**
 	 * Method: get employee detail by id
@@ -27,7 +27,7 @@ public interface IEmployeePayrollService {
 	/**
 	 * Method: update employee details
 	 */
-	public EmployeePayrollData updateEmployeePayrollData(EmployeePayrollDTO empPayrollDTO);
+	public EmployeePayrollData updateEmployeePayrollData( int empId,EmployeePayrollDTO empPayrollDTO);
 
 	/**
 	 * Method: delete employee details
