@@ -6,18 +6,17 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.EmployeePayrollDTO;
+import com.example.demo.exceptions.EmployeePayrollException;
 import com.example.demo.model.EmployeePayrollData;
 
 
 
 @Service
 public class EmployeePayrollService implements IEmployeePayrollService {
-
-private List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
-	
+	private List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
 	/**
-	 * get employee details 
-	 * @return : Employee details
+	 * Call method to get employee details
+	 * @return : Employee details id, name and salary
 	 */
 	@Override
 	public List<EmployeePayrollData> getEmployeePayrollData() {
@@ -25,16 +24,16 @@ private List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
 	}
 
 	/**
-	 * get employee details
-	 * @return : Employee detail using id
+	 * Call get method 
+	 * @return : Employee details with id
 	 */
 	@Override
 	public EmployeePayrollData getEmployeePayrollDataById(int empId) {
-		return employeePayrollList.get(empId-1);
-	}
+		 return employeePayrollList.stream().filter(empData -> empData.getEmployeeId()== empId).findFirst().orElseThrow(() -> new EmployeePayrollException("Employee Not Found"));
+    }
 
 	/**
-	 * post employee details
+	 * Call post method 
 	 * @return : Employee details with id
 	 */
 	@Override
@@ -46,11 +45,11 @@ private List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
 	}
 
 	/**
-	 * update employee details
-	 * @return : updated Employee details
+	 * Call update method 
+	 * @return :  updated Employee details
 	 */
 	@Override
-	public EmployeePayrollData updateEmployeePayrollData(int empId,EmployeePayrollDTO empPayrollDTO) {
+	public EmployeePayrollData updateEmployeePayrollData(int empId, EmployeePayrollDTO empPayrollDTO) {
 		EmployeePayrollData empData = this.getEmployeePayrollDataById(empId);
 		empData.setName(empPayrollDTO.name);
 		empData.setSalary(empPayrollDTO.salary);
@@ -59,7 +58,7 @@ private List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
 	}
 
 	/**
-	 * Call delete method
+	 * Call delete method 
 	 */
 	@Override
 	public void deleteEmployeePayrollData(int empId) {
