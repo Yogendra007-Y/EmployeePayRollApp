@@ -66,10 +66,4 @@ private List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
 		employeePayrollList.remove(empId-1);
 	}
 
-	@Override
-	public EmployeePayrollData updateEmployeePayrollData(EmployeePayrollDTO empPayrollDTO) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
