@@ -19,44 +19,49 @@ import lombok.Data;
 
 @Entity
 @Table(name = "employee_payroll")
-	@Data
-public class EmployeePayrollData {
-		@Id
-		@GeneratedValue(strategy = GenerationType.AUTO)
-		@Column(name = "emp_id")
-		private int employeeId;
+public @Data class EmployeePayrollData {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "emp_id")
+	private int employeeId;
 
-		@Column(name = "name")
-		private String name;
+	@Column(name = "name")
+	private String name;
 
-		private long salary;
-		private String gender;
+	private long salary;
+	private String gender;
 
-		@Column(name = "start_date")
-		private LocalDate startDate;
+	@Column(name = "start_date")
+	private LocalDate startDate;
 
-		private String note;
+	private String note;
 
-		@Column(name = "profile_pic")
-		private String profilePic;
+	@Column(name = "profile_pic")
+	private String profilePic;
 
-		@ElementCollection
-		@CollectionTable(name = "employee_department", joinColumns = @JoinColumn(name = "id"))
-		@Column(name = "department")
-		private List<String> departments;
+	@ElementCollection
+	@CollectionTable(name = "employee_department", joinColumns = @JoinColumn(name = "id"))
+	@Column(name = "department")
+	private List<String> departments;
 
-		public EmployeePayrollData(EmployeePayrollDTO empPayRollDTO) {
-			this.updateEmployeePayroll(empPayRollDTO);
-		}
-
-		public void updateEmployeePayroll(EmployeePayrollDTO empPayRollDTO) {
-			this.name = empPayRollDTO.name;
-			this.salary = empPayRollDTO.salary;
-			this.gender = empPayRollDTO.gender;
-			this.note = empPayRollDTO.note;
-			this.startDate = empPayRollDTO.startDate;
-			this.profilePic = empPayRollDTO.profilePic;
-			this.departments = empPayRollDTO.departments;
-		}
-
+	public EmployeePayrollData() {
+		super();
+	} 
+	
+	public EmployeePayrollData(EmployeePayrollDTO empPayRollDTO) {
+		this.updateEmployeePayroll(empPayRollDTO);
 	}
+
+	public void updateEmployeePayroll(EmployeePayrollDTO empPayRollDTO) {
+		this.name = empPayRollDTO.name;
+		this.salary = empPayRollDTO.salary;
+		this.gender = empPayRollDTO.gender;
+		this.note = empPayRollDTO.note;
+		this.startDate = empPayRollDTO.startDate;
+		this.profilePic = empPayRollDTO.profilePic;
+		this.departments = empPayRollDTO.departments;
+	}
+
+
+
+}
