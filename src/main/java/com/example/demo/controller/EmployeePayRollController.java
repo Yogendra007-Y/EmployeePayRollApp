@@ -19,11 +19,12 @@ import com.example.demo.dto.EmployeePayrollDTO;
 import com.example.demo.dto.ResponseDTO;
 import com.example.demo.model.EmployeePayrollData;
 import com.example.demo.service.IEmployeePayrollService;
-
+import lombok.extern.slf4j.Slf4j;
 
 
 @RestController
 @RequestMapping("/employee")
+@Slf4j
 public class EmployeePayrollController {
 
 	@Autowired
@@ -32,7 +33,7 @@ public class EmployeePayrollController {
 	/**
 	 * @return : employee details
 	 */
-	@RequestMapping(value = { "", "/", "/get" })
+	@RequestMapping(value = { "/getAll" })
 	public ResponseEntity<ResponseDTO> getEmployeePayrollData() {
 		List<EmployeePayrollData> empDataList = null;
 		empDataList = employeePayrollService.getEmployeePayrollData();
@@ -41,9 +42,9 @@ public class EmployeePayrollController {
 	}
 
 	/**
-	 * Call get method 
-	 * @param empId : Employee id
-	 * @return : Employee details with id
+	 * @GetMapping : get Employee details from table
+	 * @param : empId
+	 * @return : return employee details using id
 	 */
 	@GetMapping("/get/{empId}")
 	public ResponseEntity<ResponseDTO> getEmployeePayrollData(@PathVariable("empId") int empId) {
@@ -54,12 +55,13 @@ public class EmployeePayrollController {
 	}
 
 	/**
-	 * Call post method
-	 * @param empPayrollDTO : name, salary
-	 * @return : Employee details with id
+	 * @PostMapping : add Employee details in the table
+	 * @param EmployeePayrollDTO
+	 * @return : Added employee details
 	 */
 	@PostMapping("/create")
 	public ResponseEntity<ResponseDTO> addEmployeePayrollData(@Valid @RequestBody EmployeePayrollDTO empPayrollDTO) {
+		log.debug("EmployeeDTO : "+ empPayrollDTO.toString());
 		EmployeePayrollData empData = null;
 		empData = employeePayrollService.createEmployeePayrollData(empPayrollDTO);
 		ResponseDTO respDTO = new ResponseDTO("Created Employee PayrollData Successfully:", empData);
@@ -67,14 +69,14 @@ public class EmployeePayrollController {
 	}
 
 	/**
-	 * Call put method
-	 * @param empId : Employee id
-	 * @param empPayrollDTO : name, salary
-	 * @return : Employee details
+	 * @PutMapping : edit details in the table
+	 * @param EmployeePayrollDTO
+	 * @return : return employee details
 	 */
+
 	@PutMapping("/update/{empId}")
-	public ResponseEntity<ResponseDTO> updateEmployeePayrollData(@Valid @PathVariable("empId") int empId,
-			@RequestBody EmployeePayrollDTO empPayrollDTO) {
+	public ResponseEntity<ResponseDTO> updateEmployeePayrollData(@PathVariable("empId") int empId,
+			@Valid @RequestBody EmployeePayrollDTO empPayrollDTO) {
 		EmployeePayrollData empData = null;
 		empData = employeePayrollService.updateEmployeePayrollData(empId, empPayrollDTO);
 		ResponseDTO respDTO = new ResponseDTO("Updated Employee PayrollData Successfully:", empData);
@@ -83,14 +85,15 @@ public class EmployeePayrollController {
 	}
 
 	/**
-	 * Call delete method
-	 * @param empId : Employee id
-	 * @return : Deletion status with id
+	 * @DeleteMapping : delete Employee details from table
+	 * @param empId
+	 * @return : return deleted Employee
 	 */
 	@DeleteMapping("/delete/{empId}")
 	public ResponseEntity<ResponseDTO> deleteEmployeePayrollData(@PathVariable("empId") int empId) {
 		employeePayrollService.deleteEmployeePayrollData(empId);
-		ResponseDTO respDTO = new ResponseDTO("Deleted Successful,Deleted Id:", + empId);
+		ResponseDTO respDTO = new ResponseDTO("Deleted Successful,Deleted Id:", +empId);
 		return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
 	}
+
 }
