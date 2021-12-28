@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.example.demo.EmployeePayRollAppApplication;
 import com.example.demo.dto.EmployeePayrollDTO;
 import com.example.demo.exceptions.EmployeePayrollException;
 import com.example.demo.model.EmployeePayrollData;
@@ -78,5 +76,10 @@ public class EmployeePayrollService implements IEmployeePayrollService {
 		EmployeePayrollData empData = this.getEmployeePayrollDataById(empId);
 		employeeRepository.delete(empData);
 	}
+	 @Override
+	    public List<EmployeePayrollData> getEmployeesPayrollDataByDepartment(String department) {
+	        return employeeRepository.findEmployeesByDepartment(department);
+	    }
+
 
 }

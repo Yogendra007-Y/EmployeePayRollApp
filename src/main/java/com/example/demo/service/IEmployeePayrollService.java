@@ -33,4 +33,9 @@ public interface IEmployeePayrollService {
 	 * Method: delete employee details
 	 */
 	public void deleteEmployeePayrollData(int empId);
+
+	/**
+	 * Method: get employee details by department
+	 */
+	List<EmployeePayrollData> getEmployeesPayrollDataByDepartment(String department);
 }
