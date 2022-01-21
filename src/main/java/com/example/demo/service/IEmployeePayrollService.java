@@ -2,40 +2,36 @@ package com.example.demo.service;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
+import org.apache.catalina.User;
+
 import com.example.demo.dto.EmployeePayrollDTO;
+import com.example.demo.dto.LoginDto;
+import com.example.demo.dto.ResponseDTO;
 import com.example.demo.model.EmployeePayrollData;
 
 
 
 public interface IEmployeePayrollService {
 
-	/**
-	 * Method: get employee details
-	 */
-	public List<EmployeePayrollData> getEmployeePayrollData();
+	EmployeePayrollData getEmployeePayrollDataById(Long empId, String token);
 
-	/**
-	 * Method: get employee detail by id
-	 */
-	public EmployeePayrollData getEmployeePayrollDataById(int empId);
+	ResponseDTO createEmployeePayrollData(@Valid EmployeePayrollDTO empPayrollDTO);
 
-	/**
-	 * Method: add employee details
-	 */
-	public EmployeePayrollData createEmployeePayrollData(EmployeePayrollDTO empPayrollDTO);
+	List<EmployeePayrollData> getEmployeePayrollData(String token);
 
-	/**
-	 * Method: update employee details
-	 */
-	public EmployeePayrollData updateEmployeePayrollData( int empId,EmployeePayrollDTO empPayrollDTO);
+	
+	ResponseDTO deleteEmployeePayrollData(Long empId, String token);
 
-	/**
-	 * Method: delete employee details
-	 */
-	public void deleteEmployeePayrollData(int empId);
 
-	/**
-	 * Method: get employee details by department
-	 */
-	List<EmployeePayrollData> getEmployeesPayrollDataByDepartment(String department);
+//	List<EmployeePayrollData> getEmployeesPayrollDataByDepartment(String department, String token);
+
+	ResponseDTO updateEmployeePayrollData(EmployeePayrollDTO empPayrollDTO, String token, @Valid Long empId);
+
+	ResponseDTO LoginEmployeePayrollData(@Valid LoginDto loginDto);
+
+	
+
+
 }
