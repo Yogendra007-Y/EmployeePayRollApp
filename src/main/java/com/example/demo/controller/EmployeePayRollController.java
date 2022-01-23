@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 import java.util.List;
 
+
 import javax.validation.Valid;
 
 import org.apache.catalina.User;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.EmployeePayrollDTO;
+import com.example.demo.dto.LoginDto;
 import com.example.demo.dto.ResponseDTO;
 import com.example.demo.model.EmployeePayrollData;
 import com.example.demo.service.EmployeePayrollService;
@@ -37,6 +39,8 @@ public class EmployeePayrollController {
 	   @Autowired
 	    TokenUtil tokenutil;
 		
+	   
+
 		
 		@PostMapping("/create")
 		public ResponseEntity<ResponseDTO> addEmployeePayrollData(@Valid @RequestBody EmployeePayrollDTO empPayrollDTO){
@@ -97,6 +101,13 @@ public class EmployeePayrollController {
 	public ResponseEntity<ResponseDTO> deleteEmployeePayrollData(@PathVariable("empId") Long empId , @RequestHeader String token) {
 		ResponseDTO respDTO = employeePayrollService.deleteEmployeePayrollData(empId , token);
 		return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
+	}
+	
+	@PostMapping("/login")
+	public ResponseEntity<ResponseDTO> loginDataValidation(@RequestBody LoginDto loginDto) {
+		ResponseDTO response = employeePayrollService.LoginEmployeePayrollData(loginDto);
+		log.debug("User Login input details: " + loginDto.toString());
+		return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
 	}
 	
 	/**

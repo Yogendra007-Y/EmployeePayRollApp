@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import com.example.demo.dto.EmployeePayrollDTO;
+import com.example.demo.dto.LoginDto;
+//import com.example.demo.dto.LoginDto;
 import com.example.demo.dto.ResponseDTO;
 import com.example.demo.exceptions.EmployeePayrollException;
 import com.example.demo.model.EmployeePayrollData;
@@ -28,14 +30,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class EmployeePayrollService implements IEmployeePayrollService {
 
+	private static final ResponseDTO ResponseDTO = null;
+
 	@Autowired
 	private IEmployeePayrollRepository employeeRepository;
 
 	@Autowired
     TokenUtil tokenUtil;
-	
-	@Autowired
-	ModelMapper modelmapper;
+
 
 	/**
 	 * @param : usernamr password
@@ -56,7 +58,7 @@ public class EmployeePayrollService implements IEmployeePayrollService {
 		throw new EmployeePayrollException("Employee Details Aleady Added", 400);
 		
 	}else {
-		EmployeePayrollData contact = modelmapper.map(empPayrollDTO, EmployeePayrollData.class);
+		EmployeePayrollData contact = new EmployeePayrollData(empPayrollDTO);;
 		employeeRepository.save(contact);
 		String token1 = tokenUtil.createToken(contact.getEmployeeId());
 		return new ResponseDTO("contact successfully added,token1,HttpsStatus.OK", token1, HttpStatus.OK);
@@ -145,6 +147,26 @@ public class EmployeePayrollService implements IEmployeePayrollService {
 			return new ResponseDTO("Deleted Successfully ",id,HttpStatus.ACCEPTED);
 				
 		}
+
+
+	@Override
+	public ResponseDTO LoginEmployeePayrollData(@Valid LoginDto loginDto) {
+		String token;
+		Optional<EmployeePayrollData> isPresent = employeeRepository.findByEmailId(loginDto.getEmailId());
+		if (isPresent.isPresent()) {
+			String pass = isPresent.get().getPassword();
+			if (pass.equals(loginDto.getPassword())) {
+				// long empId = employeeRepository.getUserDetails(loginDTO.getEmailId(),
+				// loginDTO.getPassword());
+				token = tokenUtil.createToken(isPresent.get().getEmployeeId());
+				return new ResponseDTO("Employee is found", token, HttpStatus.OK);
+			} else {
+				throw new EmployeePayrollException("Password is Wrong");
+			}
+		} else {
+			throw new EmployeePayrollException("Email ID or password is wrong");
+		}
+	}
 
 
 	
